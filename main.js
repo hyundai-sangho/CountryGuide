@@ -11,12 +11,12 @@ let countryInput = document.getElementById("country-inp");
  * 3. 인구수
  * 4. 통화명 - 통화 코드
  * 5. 사용 언어
-*/
-let getCountryData = () => {
+ */
+let getCountryData = async () => {
   let countryName = countryInput.value;
   let finalURL = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
 
-  fetch(finalURL)
+  await fetch(finalURL)
     .then((response) => response.json())
     .then((data) => {
       result.innerHTML = `
@@ -53,13 +53,14 @@ let getCountryData = () => {
           </div>
         </div>
       `;
-    }).catch(()=>{
-      if(countryName.length == 0){
-        result.innerHTML = `<h3>The input field cannot be empty</h3>`
-      }else{
-        result.innerHTML = `<h3>Please enter a valid country name.</h3>`
-      }
     })
+    .catch(() => {
+      if (countryName.length == 0) {
+        result.innerHTML = `<h3>The input field cannot be empty</h3>`;
+      } else {
+        result.innerHTML = `<h3>Please enter a valid country name.</h3>`;
+      }
+    });
 };
 
 // 이벤트
